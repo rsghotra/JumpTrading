@@ -32,13 +32,14 @@ public:
     {
     case 0:
       /* code to process incoming buy order*/
-      //ifOrderIsAggressiveBuyThenProcessImmediately
+      // ifOrderIsAggressiveBuyThenProcessImmediately
       //else add the incoming order to bid_book as resting order
       break;
     case 1:
       //ifOrderisAggressiveSellProcessImmediately
       //else add incoming order to ask_book as resting order
     default:
+      std::cerr << "BAD ORDER SIDE DETECTED." << std::endl;
       break;
     }
   }
@@ -84,6 +85,6 @@ void main() {
   OrderBook book;
   std::string input;
   while(std::getline(std::cin, input)) {
-    parser.parse(input);
+    parser.parse(input); // for each input line full processing will happen and the cursor will come back
   }
 }
