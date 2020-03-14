@@ -1,4 +1,12 @@
+#include <string>
+#include <iostream>
+
 class OrderBook {
+private:
+  int orderId;
+  bool side;
+  double price;
+  int size;
 public:
   void add_order(int id, bool side, double price, int size);
   void cancel_order(int id);
