@@ -28,7 +28,19 @@ private:
   std::unordered_map<int, std::list<LevelNode*>::iterator> order_map;
 public:
   void add_order(int id, bool side, double price, int size) {
-
+    switch (side)
+    {
+    case 0:
+      /* code to process incoming buy order*/
+      //ifOrderIsAggressiveBuyThenProcessImmediately
+      //else add the incoming order to bid_book as resting order
+      break;
+    case 1:
+      //ifOrderisAggressiveSellProcessImmediately
+      //else add incoming order to ask_book as resting order
+    default:
+      break;
+    }
   }
   void cancel_order(int id);
 };
@@ -36,13 +48,12 @@ public:
 class MessageParser {
 //ideal way to write
 public:
-  void parse(std::string  &input) {
+  void parse(const std::string  &input) {
     //sohisticated validation need to be done here
     //1. Check if you have 5 required parameters for add order and three paramters for cancel order
-    //2. Check types of each parameter
-    //3. Populate order book's buy and sell struct
-    //4. Run OrderMatching algorithm to see if there is a trade match
-
+    //2. Check data types of each parameter
+    //if incoming msg id == 0 then call book.add_order
+    //else if incoming msg id == 1  then call book.cancel_order
   }
 };
 
