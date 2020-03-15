@@ -92,6 +92,19 @@ public:
           std::cerr << "Invalid side found.";
           return;
         }
+        //validate price and size
+        try {
+          size = std::stoi(tokens[3]);
+        } catch(...) {
+          std::cerr << "Quantity is too large or too low than permissible limits.";
+          return;
+        }
+        try {
+          price = std::stoi(tokens[4]);
+        } catch(...) {
+          std::cerr << "Price is too large or too low than permissible limits.";
+          return;
+        }
         orderBook.order_matcher(orderId, side, price, size);
       } else if(msgId == 1 && tokens.size() == 2) {
         orderBook.cancel_order(orderId);
@@ -102,19 +115,6 @@ public:
       }
     } catch(...) {
       std::cerr << "msgID or orderID size is too big or the value is not convertable to int" << std::endl;
-      return;
-    }
-    //validate price and size
-    try {
-      size = std::stoi(tokens[3]);
-    } catch(...) {
-      std::cerr << "Quantity is too large or too low than permissible limits.";
-      return;
-    }
-    try {
-      price = std::stoi(tokens[4]);
-    } catch(...) {
-      std::cerr << "Price is too large or too low than permissible limits.";
       return;
     }
   }
