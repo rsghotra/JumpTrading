@@ -53,7 +53,7 @@ private:
   }
 
 public:
-  void parse(const std::string  &input) {
+  void parse(const std::string  &input, OrderBook &orderBook) {
     //https://www.fluentcpp.com/2017/04/21/how-to-split-a-string-in-c/
     std::vector<std::string> tokens;
     std::string token;
@@ -72,26 +72,20 @@ public:
       std::cerr << "Please check number of arguments provided to the system." << std::endl;
       std::cerr << "Order book accepts either 5(for adding a order) or 2(for cancelling a order)." << std::endl;
     }
-    //convert string to integer
     try {
       msgId  = std::stoi(tokens[0]);
       orderId = std::stoi(tokens[1]);
       if(orderId <= 0) std::cerr << "Order ID is negative, please enter a valid orderID" << std::endl;
-      if(msgId == 0) {
-
-      } else if(msgId == 1) {
-        orderId = std::stoi(tokens[1]);
-
+      if(msgId == 0 && tokens.size() == 5) {
+        //at this point we know that the incoming message is a addOrder message.
+      } else if(msgId == 1 && tokens.size() == 2) {
+        orderBook.cancel_order(orderId);
       } else {
-        std::cerr << "Wrong msg type detected. Possible input message types are: 0 and 1." << std::endl;
+        std::cerr << "Wrong msg type detected and number of parameters detected. Possible input message types are: 0 and 1.\nPossible number of input paramters are five." << std::endl;
       }
     } catch(...) {
       std::cerr << "msgID or orderID size is too big or the value is not convertable to int" << std::endl;
     }
-    
-    //2. Check data types of each parameter
-    //if incoming msg id == 0 then call book.add_order
-    //else if incoming msg id == 1  then call book.cancel_order
   }
 };
 
@@ -121,7 +115,7 @@ int main() {
   OrderBook book;
   std::string input;
   while(std::getline(std::cin, input)) {
-    parser.parse(input); // for each input line. OrderMatcher is invoked
+    parser.parse(input, book); // for each input line. OrderMatcher is invoked
   }
   return 0;
 }
