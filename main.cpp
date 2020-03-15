@@ -60,11 +60,19 @@ public:
     std::istringstream tokenStream(input);
     while(std::getline(tokenStream, token, ',')) {
       //stripping whitespace from each token, if exists
+      //https://www.techiedelight.com/remove-whitespaces-string-cpp/
       token.erase(std::remove_if(token.begin(), token.end(), ::isspace), token.end());
       tokens.push_back(token);
     }
-    //parameter validation begins
-    //1. Check if you have 5 required parameters for add order and three paramters for cancel order
+    if(tokens.size() == 2 || tokens.size() == 5) {
+      //passes first test of validation
+    } else {
+      std::cerr <<"====Erroneus Input===" << std::endl;
+      std::cerr << "Please check number of arguments provided to the system." << std::endl;
+      std::cerr << "Order book accepts either 5(for adding a order) or 2(for cancelling a order)." << std::endl;
+    }
+    //Since there are only two possible types of input messages.
+    //1. Check if you have 2 or 5 required parameters for add order and three paramters for cancel order
     //2. Check data types of each parameter
     //if incoming msg id == 0 then call book.add_order
     //else if incoming msg id == 1  then call book.cancel_order
