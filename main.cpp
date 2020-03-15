@@ -58,21 +58,37 @@ public:
     std::vector<std::string> tokens;
     std::string token;
     std::istringstream tokenStream(input);
+    int msgId=-1, orderId=0, size=0;
+    bool side=0;
+    double price=0.0;
     while(std::getline(tokenStream, token, ',')) {
       //stripping whitespace from each token, if exists
       //https://www.techiedelight.com/remove-whitespaces-string-cpp/
       token.erase(std::remove_if(token.begin(), token.end(), ::isspace), token.end());
       tokens.push_back(token);
     }
-    if(tokens.size() == 2 || tokens.size() == 5) {
-      //passes first test of validation
-    } else {
+    if(tokens.size() != 2 && tokens.size() != 5) {
       std::cerr <<"====Erroneus Input===" << std::endl;
       std::cerr << "Please check number of arguments provided to the system." << std::endl;
       std::cerr << "Order book accepts either 5(for adding a order) or 2(for cancelling a order)." << std::endl;
     }
-    //Since there are only two possible types of input messages.
-    //1. Check if you have 2 or 5 required parameters for add order and three paramters for cancel order
+    //convert string to integer
+    try {
+      msgId  = std::stoi(tokens[0]);
+      orderId = std::stoi(tokens[1]);
+      if(orderId <= 0) std::cerr << "Order ID is negative, please enter a valid orderID" << std::endl;
+      if(msgId == 0) {
+
+      } else if(msgId == 1) {
+        orderId = std::stoi(tokens[1]);
+
+      } else {
+        std::cerr << "Wrong msg type detected. Possible input message types are: 0 and 1." << std::endl;
+      }
+    } catch(...) {
+      std::cerr << "msgID or orderID size is too big or the value is not convertable to int" << std::endl;
+    }
+    
     //2. Check data types of each parameter
     //if incoming msg id == 0 then call book.add_order
     //else if incoming msg id == 1  then call book.cancel_order
