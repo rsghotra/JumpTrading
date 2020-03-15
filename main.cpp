@@ -6,6 +6,7 @@
 #include <iterator>
 #include <sstream>
 #include <vector>
+#include <algorithm>
 /* Details of data structures */
 struct Level;
 struct LevelNode {
@@ -44,12 +45,25 @@ public:
 };
 
 class MessageParser {
+private:
+  void _print_vector(std::vector<std::string> const &input) {
+    for(auto it = input.cbegin(); it != input.end(); it++) {
+      std::cout << *it << ' ';
+    }
+  }
+
 public:
   void parse(const std::string  &input) {
-    std::istringstream iss(input);
-    std::vector<std::string> tokens{std::istream_iterator<std::string>{iss},
-                                    std::istream_iterator<std::string>{}};
-    //sohisticated validation need to be done here
+    //https://www.fluentcpp.com/2017/04/21/how-to-split-a-string-in-c/
+    std::vector<std::string> tokens;
+    std::string token;
+    std::istringstream tokenStream(input);
+    while(std::getline(tokenStream, token, ',')) {
+      //stripping whitespace from each token, if exists
+      token.erase(std::remove_if(token.begin(), token.end(), ::isspace), token.end());
+      tokens.push_back(token);
+    }
+    //parameter validation begins
     //1. Check if you have 5 required parameters for add order and three paramters for cancel order
     //2. Check data types of each parameter
     //if incoming msg id == 0 then call book.add_order
@@ -78,7 +92,6 @@ public:
 };
 
 /* Main */
-
 int main() {
   MessageParser parser;
   OrderBook book;
