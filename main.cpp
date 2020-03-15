@@ -7,6 +7,7 @@
 #include <sstream>
 #include <vector>
 #include <algorithm>
+
 /* Details of data structures */
 struct Level;
 struct LevelNode {
@@ -31,10 +32,17 @@ private:
   Book bid_book;
   // Hash table to get LevelNode* from order id
   std::unordered_map<int, std::list<LevelNode*>::iterator> order_map;
-  void _orderMatcher() {
-    
-  }
 public:
+  void order_matcher(int id, bool side, double price, int size) {
+    if(!side) {
+      //match against bid_book - recursively
+      //if leftover quantity - add to ask_book
+    } else {
+      //match against ask_book - recursively
+      //update both  bid and ask book accordingly.
+      //if leftover quantity - add the order to bid_book
+    }
+  }
   void add_order(int id, bool side, double price, int size) {
       //call order matcher with same paramterest and additional
   }
@@ -51,15 +59,14 @@ private:
       std::cout << *it << ' ';
     }
   }
-
 public:
   void parse(const std::string  &input, OrderBook &orderBook) {
     //https://www.fluentcpp.com/2017/04/21/how-to-split-a-string-in-c/
     std::vector<std::string> tokens;
     std::string token;
     std::istringstream tokenStream(input);
-    int msgId=-1, orderId=0, size=0;
-    bool side=0;
+    int msgId=-1, orderId=-1, size=-1;
+    bool side;
     double price=0.0;
     while(std::getline(tokenStream, token, ',')) {
       //stripping whitespace from each token, if exists
@@ -77,14 +84,38 @@ public:
       orderId = std::stoi(tokens[1]);
       if(orderId <= 0) std::cerr << "Order ID is negative, please enter a valid orderID" << std::endl;
       if(msgId == 0 && tokens.size() == 5) {
-        //at this point we know that the incoming message is a addOrder message.
+        if(tokens[2] == "0") {
+          side = 0;
+        } else if(tokens[2] == "1") {
+          side = 1;
+        } else {
+          std::cerr << "Invalid side found.";
+          return;
+        }
+        orderBook.order_matcher(orderId, side, price, size);
       } else if(msgId == 1 && tokens.size() == 2) {
         orderBook.cancel_order(orderId);
+        return;
       } else {
-        std::cerr << "Wrong msg type detected and number of parameters detected. Possible input message types are: 0 and 1.\nPossible number of input paramters are five." << std::endl;
+        std::cerr << "Wrong msg type detected and number of parameters detected. Possible input message types are: 0 and 1." << std::endl;
+        return;
       }
     } catch(...) {
       std::cerr << "msgID or orderID size is too big or the value is not convertable to int" << std::endl;
+      return;
+    }
+    //validate price and size
+    try {
+      size = std::stoi(tokens[3]);
+    } catch(...) {
+      std::cerr << "Quantity is too large or too low than permissible limits.";
+      return;
+    }
+    try {
+      price = std::stoi(tokens[4]);
+    } catch(...) {
+      std::cerr << "Price is too large or too low than permissible limits.";
+      return;
     }
   }
 };
