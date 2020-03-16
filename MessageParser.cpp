@@ -1,11 +1,46 @@
-#include "MessageParser.h"
+#include <iostream>
+#include<vector>
+#include<iostream>
+#include <sstream>
+#include<algorithm>
 
-void MessageParser::print_vector(std::vector<std::string> const &input) {
-    for(auto it = input.cbegin(); it != input.end(); it++) {
-        std::cout << *it << ' ';
-    }
+#include "MessageParser.h"
+#include "Util.h"
+
+void MessageParser::parse(const std::string  &input) {
+	std::istringstream ss(input);
+	std::string token;
+	// TODO sanity checks
+	try {
+		std::getline(ss, token, ',');
+		int c = str2i(token);
+		if( c==0 ) {
+			int id;
+			int side;
+			int size;
+			double price;
+			std::getline(ss, token, ',');
+			id = str2i(token);
+			std::getline(ss, token, ',');
+			side = str2i(token);
+			std::getline(ss, token, ',');
+			size = str2i(token);
+			std::getline(ss, token, ',');
+			price = str2d(token);
+			book.add_order(id, side, price, size);
+		} else if( c== 1) {
+			int id;
+			std::getline(ss, token, ',');
+			id = str2i(token);
+			book.cancel_order(id);
+		} else {
+		}
+	} catch(...) {
+		std::cerr << "BADMESSAGE\n";
+	}
 }
 
+/*
 void MessageParser::parse(const std::string  &input, OrderBook &orderBook) {
     //https://www.fluentcpp.com/2017/04/21/how-to-split-a-string-in-c/
     std::vector<std::string> tokens;
@@ -64,3 +99,4 @@ void MessageParser::parse(const std::string  &input, OrderBook &orderBook) {
       return;
     }
 }
+*/

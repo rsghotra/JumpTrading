@@ -1,13 +1,17 @@
 #include <iostream>
-#include "MessageParser.cpp"
-#include "OrderBook.h"
+#include "MessageParser.h"
+#include "OrderBookLL.h"
+#include "OrderBookRBT.h"
+#include "ExecutionLogger.h"
 
 int main() {
-  MessageParser parser;
-  OrderBook book;
+  OrderBookLL book;
+  MessageParser parser(book);
+  ExecutionLogger logger;
+  book.set_execution_listener(&logger);
   std::string input;
   while(std::getline(std::cin, input)) {
-    parser.parse(input, book);
+    parser.parse(input);
   }
   return 0;
 }
