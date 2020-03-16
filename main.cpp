@@ -7,72 +7,7 @@
 #include <sstream>
 #include <vector>
 #include <algorithm>
-
-/* Details of data structures */
-struct Level;
-struct LevelNode {
-  int id;
-  int size;
-  Level* level;
-};
-
-struct Level {
-  double price;
-  int num_nodes;
-  std::list<LevelNode*> nodes;
-};
-
-struct Book {
-  std::list<Level*> levels;
-};
-
-class OrderBook {
-private:
-  Book ask_book;
-  Book bid_book;
-  //heads
-  Book *askBookHead;
-  Book *bidBookHead;
-  // Hash table to get LevelNode* from order id
-  std::unordered_map<int, std::list<LevelNode*>::iterator> order_map;
-public:
-  OrderBook() {
-    askBookHead = &ask_book;
-    bidBookHead = &bid_book;
-  }
-  ~OrderBook();
-  void order_matcher(int id, bool side, double price, int size) {
-    if(!side) {
-      //if side is buy
-      if(!askBookHead) {
-        //no seller in the market
-        //insert first order to bid book
-      }
-      //if askbook is not empty
-      //Iterate over the ask_book and see first if price matches. 
-      //if leftover quantity - add to bid_book
-    } else {
-      if(!bidBookHead) {
-        //no buyer in the market
-        //insert first sell order to ask book as resting order
-      }
-      //match against ask_book - recursively
-      //update both  bid and ask book accordingly.
-      //if leftover quantity - add the order to bid_book
-    }
-  }
-  //partial fill - update the data structure
-
-  //insert in the data structure
-  void add_order(int id, bool side, double price, int size) {
-      //call order matcher with same paramterest and additional 
-  }
-  //delete in data structure
-  void cancel_order(int id) {
-    //find the corresponding level node from hash map.
-    //remove the identified level node.
-  }
-};
+#include "OrderBook.h"
 
 class MessageParser {
 private:
