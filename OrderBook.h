@@ -31,23 +31,21 @@ private:
         OrderBook() {
         }
         ~OrderBook() {};
-        //method to create a Level by price which will call createLevelNode
+        //createBookNode->createLevelNodeList->createLevelNode
         Level* createBookNode(int id, double price, int size) {
             //when it will create level it will also create LevelNode for the entry itself.
             Level *levelPtr = new Level;
             levelPtr->price = price;
-            levelPtr->nodes = createLevelNode(levelPtr, id, size);
-            levelPtr->num_nodes = levelPtr->nodes.size;
+            levelPtr->nodes = createLevelNodeList(levelPtr, id, size);
+            levelPtr->num_nodes = levelPtr->nodes.size();
             return levelPtr;
         }
-
+        //insertBookNode->createBookNode->createLevelNodeList->createLevelNode
         void insertBookNode(int id, bool side, double price, int size) {
             Level* level = createBookNode(id, price, size);
             if(side) {
                 ask_book.levels.push_back(level);
-                //because it is a new order with unique order id. corresponding data will be entered order_map
-                //initialize the iterator to the LevelNode
-                std::list<LevelNode*>::iterator it;
+                //add new order id into unordered map
                 
             } else {
                 //bid_book insert
@@ -55,8 +53,29 @@ private:
             }
         }
 
-        std::list<LevelNode*> createLevelNode(Level* parent, int id, int size) {
+        //createLevelNodeList->createLevelNode
+        std::list<LevelNode*> createLevelNodeList(Level* parent, int id, int size) {
             //createLevelNode could be called both by createLevel and also when order comes for same price
+            LevelNode *levelNodePtr = createLevelNode(parent, id, size);
+            std::list<LevelNode*> newLevelNodeList;
+            newLevelNodeList.push_back(levelNodePtr);
+            return newLevelNodeList;
+        }
+
+        //createLevelNode
+        LevelNode* createLevelNode(Level* parent, int id, int size) {
+            //createLevelNode could be called both by createLevel and also when order comes for same price
+            LevelNode *levelNodePtr = new LevelNode;
+            levelNodePtr->id = id;
+            levelNodePtr->size = size;
+            levelNodePtr->level = parent;
+            return levelNodePtr;
+        }
+
+        void cancelOrder(int id) {
+            //find out LevelNode using unordered map to find parents
+            //if there is only one node in the LevelNode list then remove Level as well
+            //else remove respective node from the list
         }
 
         void order_matcher(int id, bool side, double price, int size) {}
@@ -64,10 +83,24 @@ private:
 
         //insert in the data structure
         void add_order(int id, bool side, double price, int size) {}
-        //call order matcher with same paramterest and additional
-        //delete in data structure
-        void cancel_order(int id) {}
-        //find the corresponding level node from hash map.
-        //remove the identified level node.
+
+        //iterate order book
+        void iterateOrderBook(OrderBook &book) {
+            if(book.ask_book.levels.size() != 0) {
+                std::list<Level*>::iterator iter = book.ask_book.levels.begin();
+            }
+            if(book.bid_book.levels.size() != 0) {
+                //iterate over bid_book
+                std::list<Level*>::iterator iter = book.bid_book.levels.begin();
+            }
+        }
+
+        //iterate LevelNode
+        void iterateLevelNode(std::list<LevelNode*> levelNodeList) {
+            if(levelNodeList.size()) {
+                //iterate over levelNodeList
+                std::list<LevelNode*>::iterator iter = levelNodeList.begin();
+            }
+        }
 };
 #endif

@@ -53,7 +53,7 @@ void MessageParser::parse(const std::string  &input, OrderBook &orderBook) {
         }
         orderBook.order_matcher(orderId, side, price, size);
       } else if(msgId == 1 && tokens.size() == 2) {
-        orderBook.cancel_order(orderId);
+        orderBook.cancelOrder(orderId);
         return;
       } else {
         std::cerr << "Wrong msg type detected and number of parameters detected. Possible input message types are: 0 and 1." << std::endl;
