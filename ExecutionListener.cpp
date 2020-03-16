@@ -1,5 +1,4 @@
 #include "ExecutionListener.h"
-#include <iostream>
 
 void ExecutionListener::on_trade(double price, int size) {
     std::cout << "Trade Event!";
