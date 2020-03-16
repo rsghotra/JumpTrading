@@ -6,8 +6,6 @@ void MessageParser::print_vector(std::vector<std::string> const &input) {
     }
 }
 
-
-
 void MessageParser::parse(const std::string  &input, OrderBook &orderBook) {
     //https://www.fluentcpp.com/2017/04/21/how-to-split-a-string-in-c/
     std::vector<std::string> tokens;
