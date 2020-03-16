@@ -29,8 +29,3 @@ void OrderBook::cancel_order(int orderId) {
 
 }
 
-std::list<OrderBook::Level*> OrderBook::get_matching_levels() {
-    std::list<OrderBook::Level*> eligibleBids; 
-    return eligibleBids;
-}
-

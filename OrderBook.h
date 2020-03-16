@@ -36,7 +36,6 @@ private:
             bidBookHead = &bid_book;
         }
         ~OrderBook() {};
-        std::list<OrderBook::Level*> get_matching_levels() {}
 
         void order_matcher(int id, bool side, double price, int size) {}
         //partial fill - update the data structure
