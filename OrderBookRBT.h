@@ -3,7 +3,7 @@
 
 #include <set>
 #include <vector>
-
+#include <algorithm>
 #include "OrderBook.h"
 
 class OrderBookRBT : public OrderBook {

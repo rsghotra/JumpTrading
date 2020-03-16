@@ -5,7 +5,6 @@ add_executable(matching
 	main.cpp
 	OrderBookLL.cpp
 	OrderBookRBT.cpp
-	ExecutionListener.cpp
 	ExecutionLogger.cpp
 	MessageParser.cpp)
 

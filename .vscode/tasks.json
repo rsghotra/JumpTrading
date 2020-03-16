@@ -8,10 +8,10 @@
             "type": "shell",
             "command": "g++",
             "args": [
-                "-std=c++17",
+                "-std=c++11",
+                "*.cpp",
                 "-o",
                 "${workspaceFolderBasename}",
-                "main.cpp"
             ],
             "group": "build",
             "problemMatcher": []
