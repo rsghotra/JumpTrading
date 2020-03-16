@@ -41,10 +41,9 @@ private:
             return levelPtr;
         }
 
-        void insertBookNode(bool side, Level* level) {
+        void insertBookNode(int id, bool side, double price, int size) {
+            Level* level = createBookNode(id, price, size);
             if(side) {
-                //ask_book insert
-                //createBookNode
                 ask_book.levels.push_back(level);
                 //because it is a new order with unique order id. corresponding data will be entered order_map
                 //initialize the iterator to the LevelNode
