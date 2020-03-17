@@ -1,75 +1,53 @@
 #include "OrderBookLL.h"
+#include "Logger.h"
+
+bool match(bool side, double a, double b) {
+	if(side)
+		return a >= b;
+	return a <= b;
+}
 
 void OrderBookLL::match_order(int id, bool side, double price, int size) {
-	Book &askBook = ask_book;
-	Book &bidBook = bid_book;
-	if(side) {
-		auto it = bidBook.levels.begin();
-		if(it == bidBook.levels.end() || it->price < price) {
-			add_order(id, side, price, size);
-			return;
-		}
-		while( it!= bidBook.levels.end() &&	 size > 0 && it->price >= price) {
-			double tradePrice = it->price;
-			int tradeSize = 0;
-			if(it->num_nodes == 0) {
-				std::cerr << "OrderBookLL.match_order: Bid Book LevelNodeList is empty.\n";
-				return;
-			}
-			auto tradeNodeItr = it->nodes.begin();
-			tradeSize = std::min(size, tradeNodeItr->size);
+	LOG(DEBUG) << "OrderBookLL: match_order " << id << " " << (side?"buy":"sell") << " " << price << " " << size;
+	Book &cross = side?bid_book:ask_book;
+	auto it = cross.levels.begin();
+	while( it!= cross.levels.end() && size > 0 && match(side, it->price, price) ) {
+		double tradePrice = it->price;
+		auto node = it->nodes.begin();
+		while( node != it->nodes.end() && size > 0) {
+			int tradeSize = std::min(size, node->size);
 			size -= tradeSize;
-			tradeNodeItr->size -= tradeSize;
+			node->size -= tradeSize;
 			listener->on_trade(tradePrice, tradeSize);
 			listener->on_fill(id, size);
-			listener->on_fill(tradeNodeItr->id, tradeNodeItr->size);
-			if(tradeNodeItr->size == 0) {
-				tradeNodeItr = it->nodes.erase(tradeNodeItr);
+			listener->on_fill(node->id, node->size);
+			if(node->size == 0) {
+				order_map.erase(node->id);
+				node = it->nodes.erase(node);
 			}
 		}
-		if(size != 0) {
-			add_order(id, side, price, size);
-		}
-	} else {
-		auto it = askBook.levels.begin();
-		if(it == askBook.levels.end() || it->price > price) {
-			add_order(id, side, price, size);
-			return;
-		}
-		while(it != askBook.levels.end() && size > 0 && it->price <= price) {
-			double tradePrice = it->price;
-			int tradeSize = 0;
-			if(it->num_nodes == 0) {
-				std::cerr << "OrderBookLL.match_order: Ask Book LevelNodeList is empty.\n";
-				return;
-			}
-			auto tradeNodeItr = it->nodes.begin();
-			tradeSize = std::min(size, tradeNodeItr->size);
-			size -= tradeSize;
-			tradeNodeItr->size -= tradeSize;
-			listener->on_trade(tradePrice, tradeSize);
-			listener->on_fill(id, size);
-			listener->on_fill(tradeNodeItr->id, tradeNodeItr->size);
-			if(tradeNodeItr->size == 0) {
-				tradeNodeItr = it->nodes.erase(tradeNodeItr);
-			}
-		}
-		if(size != 0) {
-			add_order(id, side, price, size);
+		if (it->nodes.empty()) {
+			level_map.erase(it->price);
+			it = cross.levels.erase(it);
 		}
 	}
+	if(size != 0) {
+		add_order(id, side, price, size);
+	}
+	print_books();
 }
 
 void OrderBookLL::cancel_order(int id) {
-	std::cout << "OrderBookLL: cancel_order " << id << "\n";
+	LOG(DEBUG) << "OrderBookLL: cancel_order " << id << "\n";
 	if ( order_map.count(id) == 0 ) {
-		std::cerr << "Order with id " << id << " does not exist.\n";
+		LOG(WARNING) << "Order with id " << id << " does not exist.\n";
 		return;
 	}
 	auto node = order_map[id];
 	auto level = node -> level;
 	auto &book = (node -> side ) ? ask_book : bid_book;
 	level -> nodes.erase(node);
+	order_map.erase(id);
 	if ( level->nodes.empty() )
 		book.levels.erase(level);
 	print_books();
@@ -77,7 +55,7 @@ void OrderBookLL::cancel_order(int id) {
 
 
 void OrderBookLL::add_order(int id, bool side, double price, int size) {
-	std::cout << "OrderBookLL: add_order " << id << " " << (side?"buy":"sell") << " " << price << " " << size << '\n';
+	LOG(DEBUG) << "OrderBookLL: add_order " << id << " " << (side?"buy":"sell") << " " << price << " " << size << '\n';
 	if ( side ) {
 		Book &book = ask_book;
 		auto it = book.levels.begin();
@@ -97,40 +75,28 @@ void OrderBookLL::add_order(int id, bool side, double price, int size) {
 		}
 		order_map[id] = it->nodes.insert(it->nodes.end(), {id, size, side, it});
 	}
-	print_books();
 }
 
 void OrderBookLL::print_books() {
-	std::cout << "bid: [";
-	bool firstLevel = true;
-	for(const Level& level: bid_book.levels) {
-		double price = level.price;
-		if (firstLevel) {
-			firstLevel = false;
-		} else {
-			std::cout << ", ";
+	for(int side = 0; side <= 1; side+=1) {
+		std::stringstream ss;
+		std::string name = side ? "ask" : "bid";
+		Book& book = side ? ask_book : bid_book;
+		bool firstLevel = true;
+		ss << name << ": [";
+		for(const Level& level: book.levels) {
+			double price = level.price;
+			if (firstLevel) {
+				firstLevel = false;
+			} else {
+				ss << ", ";
+			}
+			ss << price << ":";
+			for(const LevelNode& node: level.nodes) {
+				ss << " " << node.size;
+			}
 		}
-		std::cout << price << ": ";
-		for(const LevelNode& node: level.nodes) {
-			std::cout << node.id << " ";
-		}
+		ss << "]";
+		LOG(INFO) << ss.str();
 	}
-	std::cout << "]\n";
-
-	std::cout << "ask: [";
-	firstLevel = true;
-	for(const Level& level: ask_book.levels) {
-		double price = level.price;
-		if (firstLevel) {
-			firstLevel = false;
-		} else {
-			std::cout << ", ";
-		}
-		std::cout << price << ": ";
-		for(const LevelNode& node: level.nodes) {
-			std::cout << node.id << " ";
-		}
-	}
-	std::cout << "]\n";
 }
-

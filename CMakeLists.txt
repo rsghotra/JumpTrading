@@ -6,9 +6,14 @@ add_executable(matching
 	OrderBookLL.cpp
 	OrderBookRBT.cpp
 	ExecutionLogger.cpp
-	MessageParser.cpp)
+	MessageParser.cpp
+	Logger.cpp)
 
 enable_testing()
-add_test(test1
-	./matching < ../testData/testSet0.txt
+add_test(NAME test0
+	COMMAND sh -c ls
+)
+
+add_test(NAME test1
+	COMMAND bash -c "diff <( ./matching < ../testData/input/testSet0.txt) ../testData/output/testSet0.txt"
 )

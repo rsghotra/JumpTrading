@@ -4,10 +4,7 @@
 #include <string>
 
 int str2i (const std::string& input) {
-	int i;
-	std::stringstream ss(input);
-	ss >> i;
-	return i;
+	return std::stoi(input);
 }
 
 double str2d (const std::string& input) {

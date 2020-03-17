@@ -1,0 +1,20 @@
+* DONE Fix order matcher algo
+* Remove non-necessary log messages
+  Progress: Created Logger class. We can specify log level in main to remove debug messages.
+  Need to make sure all debug/error messages are using this class;
+* Fix output of program according to expected output
+* Input validation
+* Create test cases
+  - order causing trade in multiple orders
+  - order causing trade in multiple orders in multiple levels
+  - garbage input (invalid code, not csv, not convertible to int/double etc)
+  - input with invalid price (price <= 0)
+  - input with invalid size (size <= 0)
+  - input with invalid id (id <= 0)
+  - add_order with id that already exists in system
+  - cancel_order with arbit id
+  - cancel_order with completed order
+* Test suite runner
+* Documentation
+* Cleanup (Good OOP + naming etc)
+* Comparison of performance (LL vs RBT)
