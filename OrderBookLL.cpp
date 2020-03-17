@@ -53,7 +53,6 @@ void OrderBookLL::cancel_order(int id) {
 	print_books();
 }
 
-
 void OrderBookLL::add_order(int id, bool side, double price, int size) {
 	LOG(DEBUG) << "OrderBookLL: add_order " << id << " " << (side?"buy":"sell") << " " << price << " " << size << '\n';
 	if ( side ) {

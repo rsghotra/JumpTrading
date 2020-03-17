@@ -5,15 +5,16 @@
 * Fix output of program according to expected output
 * Input validation
 * Create test cases
-  - order causing trade in multiple orders
-  - order causing trade in multiple orders in multiple levels
-  - garbage input (invalid code, not csv, not convertible to int/double etc)
-  - input with invalid price (price <= 0)
-  - input with invalid size (size <= 0)
-  - input with invalid id (id <= 0)
-  - add_order with id that already exists in system
-  - cancel_order with arbit id
-  - cancel_order with completed order
+  testSet2.txt  =  order causing trade in multiple orders
+  testSet3.txt  =  order causing trade in multiple orders in multiple levels
+  testSet4.txt  =  garbage input (invalid code, not csv, not convertible to int/double etc)
+  testSet5.txt  =  input with invalid price (price <= 0)
+  testSet6.txt  =  input with invalid size (size <= 0)
+  testSet7.txt  =  input with invalid id (id <= 0)
+  testSet8.txt  =  add_order with id that already exists in system
+  testSet9.txt  =  cancel_order with arbit id
+  testSet10.txt =  cancel_order with completed order
+  testSet11.txt =  out of range input
 * Test suite runner
 * Documentation
 * Cleanup (Good OOP + naming etc)
