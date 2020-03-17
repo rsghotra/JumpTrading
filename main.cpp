@@ -3,8 +3,10 @@
 #include "OrderBookLL.h"
 #include "OrderBookRBT.h"
 #include "ExecutionLogger.h"
+#include "Logger.h"
 
 int main() {
+  Log::ReportingLevel = ERROR;
   OrderBookLL book;
   MessageParser parser(book);
   ExecutionLogger logger;

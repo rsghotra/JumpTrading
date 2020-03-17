@@ -6,6 +6,7 @@
 
 #include "MessageParser.h"
 #include "Util.h"
+#include "Logger.h"
 
 void MessageParser::parse(const std::string  &input) {
 	std::istringstream ss(input);
@@ -27,16 +28,17 @@ void MessageParser::parse(const std::string  &input) {
 			size = str2i(token);
 			std::getline(ss, token, ',');
 			price = str2d(token);
-      book.match_order(id, side, price, size);
-		} else if( c== 1) {
+			book.match_order(id, side, price, size);
+		} else if( c==1) {
 			int id;
 			std::getline(ss, token, ',');
 			id = str2i(token);
 			book.cancel_order(id);
 		} else {
+			LOG(ERROR) << "Bad Request";
 		}
 	} catch(...) {
-		std::cerr << "BADMESSAGE\n";
+		LOG(ERROR) << "Bad Request";
 	}
 }
 
