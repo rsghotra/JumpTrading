@@ -5,8 +5,7 @@
 #include "ExecutionLogger.h"
 
 int main() {
-  OrderBookLL book1;
-  OrderBookRBT book;
+  OrderBookLL book;
   MessageParser parser(book);
   ExecutionLogger logger;
   book.set_execution_listener(&logger);

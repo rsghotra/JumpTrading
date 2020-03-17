@@ -27,7 +27,7 @@ void MessageParser::parse(const std::string  &input) {
 			size = str2i(token);
 			std::getline(ss, token, ',');
 			price = str2d(token);
-			book.add_order(id, side, price, size);
+      book.match_order(id, side, price, size);
 		} else if( c== 1) {
 			int id;
 			std::getline(ss, token, ',');

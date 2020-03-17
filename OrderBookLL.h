@@ -17,6 +17,7 @@ class OrderBookLL : public OrderBook {
 		void set_execution_listener(ExecutionListener* listener) override {
 			this->listener = listener;
 		};
+		void match_order(int id, bool side, double price, int size) override;
 	private:
 		struct Level;
 		struct LevelNode {
@@ -44,7 +45,6 @@ class OrderBookLL : public OrderBook {
 
 		std::unordered_map<int, std::list<LevelNode>::iterator> order_map;
 		std::unordered_map<double, std::list<Level>::iterator> level_map;
-
 
 	private:
 		void print_books();

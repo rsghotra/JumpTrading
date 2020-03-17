@@ -10,5 +10,5 @@ add_executable(matching
 
 enable_testing()
 add_test(test1
-	./matching < ../testData/testSet1.txt
+	./matching < ../testData/testSet0.txt
 )
