@@ -58,20 +58,30 @@ void OrderBookLL::add_order(int id, bool side, double price, int size) {
 	LOG(DEBUG) << "OrderBookLL: add_order " << id << " " << (side?"buy":"sell") << " " << price << " " << size << '\n';
 	if ( side ) {
 		Book &book = ask_book;
-		auto it = book.levels.begin();
-		while ( it != book.levels.end() && it->price < price ) it++;
-		if ( it == book.levels.end() || it->price != price ) {
-			it = book.levels.insert( it, Level{price});
-			//level_map[price] = it;
+		std::list<Level>::iterator it;
+		if ( level_map.count( price ) ) {
+			it = level_map[price];
+		} else {
+			it = book.levels.begin();
+			while ( it != book.levels.end() && it->price < price ) it++;
+			if ( it == book.levels.end() || it->price != price ) {
+				it = book.levels.insert( it, Level{price} );
+				level_map[price] = it;
+			}
 		}
 		order_map[id] = it->nodes.insert(it->nodes.end(), {id, size, side, it});
 	} else {
 		Book &book = bid_book;
-		auto it = book.levels.begin();
-		while ( it != book.levels.end() && it->price > price ) it++;
-		if ( it == book.levels.end() || it->price != price ) {
-			it = book.levels.insert( it, Level{price});
-			level_map[price] = it;
+		std::list<Level>::iterator it;
+		if ( level_map.count( price ) ) {
+			it = level_map[price];
+		} else {
+			it = book.levels.begin();
+			while ( it != book.levels.end() && it->price > price ) it++;
+			if ( it == book.levels.end() || it->price != price ) {
+				it = book.levels.insert( it, Level{price} );
+				level_map[price] = it;
+			}
 		}
 		order_map[id] = it->nodes.insert(it->nodes.end(), {id, size, side, it});
 	}
