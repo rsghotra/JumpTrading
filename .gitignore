@@ -1,2 +1,7 @@
 *.exe
 /build
+/CMakeFiles
+*.vcxproj
+*.vcxproj.filters
+*.cmake
+CMakeCache.txt
