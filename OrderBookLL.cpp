@@ -1,32 +1,35 @@
 #include "OrderBookLL.h"
 
 void OrderBookLL::match_order(int id, bool side, double price, int size) {
-	//if sell side
+	Book &askBook = ask_book;
+	Book &bidBook = bid_book;
 	if(side) {
-		Book &book = bid_book;
-		auto it = book.levels.begin();
-		while ( it != book.levels.end() && it->price < price ) it++;
-		//Now if end of bid book is reached and no eligible bid found
-		if ( it == book.levels.end()) {
-			it = book.levels.insert( it, Level{price});
-			//level_map[price] = it;
-			order_map[id] = it->nodes.insert(it->nodes.end(), {id, size, side, it});
+		auto it = bidBook.levels.rbegin();
+		if(it == bidBook.levels.rend() || it->price < price) {
+			add_order(id, side, price, size);
 		}
-		std::cout << "==============================" << std::endl;
-		//price-the-time rule, Best bid will be the last element of the list.
-		auto best_bid_node = book.levels.rbegin();
-		std::cout << "==============================" << std::endl;
-		//if eligible Level(s) found then traverse until the last not
-		//because list is sorted in ascending order. And, if eligible price is found
-		//save the price
+		while( it!= bidBook.levels.rbegin() && size > 0 && it->price >= price) {
+			double tradePrice = it->price;
+			int tradeSize = 0;
+			if(it->num_nodes == 0) {
+				std::cerr << "OrderBookLL.match_order: LevelNodeList is empty.";
+			}
+			auto tradeNodeItr = it->nodes.begin();
+			tradeSize = std::min(size, tradeNodeItr->size);
+			size -= tradeSize;
+			tradeNodeItr->size -= tradeSize;
+			listener->on_trade(tradePrice, tradeSize);
+			listener->on_fill(id, size);
+			listener->on_fill(tradeNodeItr->id, tradeNodeItr->size);
+			if(tradeNodeItr->size == 0) {
+				tradeNodeItr = it->nodes.erase(tradeNodeItr);
+			}
+		}
+		if(size != 0) {
+			add_order(id, side, price, size);
+		}
 	} else {
-		//if buy side
-		Book &book = ask_book;
-		auto it = book.levels.begin();
-		//best ask side will be at the beginning of the list
-		//therefore no need to go backwards or forward. Just keep processing
-		//until order_size == 0 or end of order book is reached.
-
+		auto it = askBook.levels.begin();
 	}
 }
 
