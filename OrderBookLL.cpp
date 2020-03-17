@@ -4,15 +4,15 @@ void OrderBookLL::match_order(int id, bool side, double price, int size) {
 	Book &askBook = ask_book;
 	Book &bidBook = bid_book;
 	if(side) {
-		auto it = bidBook.levels.rbegin();
-		if(it == bidBook.levels.rend() || it->price < price) {
+		auto it = bidBook.levels.begin();
+		if(it == bidBook.levels.end() || it->price < price) {
 			add_order(id, side, price, size);
 		}
-		while( it!= bidBook.levels.rbegin() && size > 0 && it->price >= price) {
+		while( it!= bidBook.levels.end() &&	 size > 0 && it->price >= price) {
 			double tradePrice = it->price;
 			int tradeSize = 0;
 			if(it->num_nodes == 0) {
-				std::cerr << "OrderBookLL.match_order: LevelNodeList is empty.";
+				std::cerr << "OrderBookLL.match_order: Bid Book LevelNodeList is empty.";
 			}
 			auto tradeNodeItr = it->nodes.begin();
 			tradeSize = std::min(size, tradeNodeItr->size);
@@ -30,6 +30,29 @@ void OrderBookLL::match_order(int id, bool side, double price, int size) {
 		}
 	} else {
 		auto it = askBook.levels.begin();
+		if(it == askBook.levels.end() || it->price > price) {
+			add_order(id, side, price, size);
+		}
+		while(it != askBook.levels.end() && size > 0 && it->price <= price) {
+			double tradePrice = it->price;
+			int tradeSize = 0;
+			if(it->num_nodes == 0) {
+				std::cerr << "OrderBookLL.match_order: Ask Book LevelNodeList is empty.";
+			}
+			auto tradeNodeItr = it->nodes.begin();
+			tradeSize = std::min(size, tradeNodeItr->size);
+			size -= tradeSize;
+			tradeNodeItr->size -= tradeSize;
+			listener->on_trade(tradePrice, tradeSize);
+			listener->on_fill(id, size);
+			listener->on_fill(tradeNodeItr->id, tradeNodeItr->size);
+			if(tradeNodeItr->size == 0) {
+				tradeNodeItr = it->nodes.erase(tradeNodeItr);
+			}
+		}
+		if(size != 0) {
+			add_order(id, side, price, size);
+		}
 	}
 }
 
