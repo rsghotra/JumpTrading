@@ -6,7 +6,7 @@
 #include "Logger.h"
 
 int main() {
-  Log::ReportingLevel = DEBUG;
+  Log::ReportingLevel = ERROR;
   OrderBookLL book;
   MessageParser parser(book);
   ExecutionLogger logger;

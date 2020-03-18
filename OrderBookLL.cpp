@@ -9,7 +9,7 @@ bool match(bool side, double a, double b) {
 
 void OrderBookLL::match_order(int id, bool side, double price, int size) {
 	LOG(DEBUG) << "OrderBookLL: match_order " << id << " " << (side?"buy":"sell") << " " << price << " " << size;
-	Book &cross = side?bid_book:ask_book;
+	Book &cross = side? bid_book:ask_book;
 	auto it = cross.levels.begin();
 	while( it!= cross.levels.end() && size > 0 && match(side, it->price, price) ) {
 		double tradePrice = it->price;
@@ -54,7 +54,7 @@ void OrderBookLL::cancel_order(int id) {
 }
 
 void OrderBookLL::add_order(int id, bool side, double price, int size) {
-	LOG(DEBUG) << "OrderBookLL: add_order " << id << " " << (side?"buy":"sell") << " " << price << " " << size << '\n';
+	LOG(DEBUG) << "OrderBookLL: add_order " << id << " " << (side?"buy":"sell") << " " << price << " " << size;
 	if ( side ) {
 		Book &book = ask_book;
 		std::list<Level>::iterator it;

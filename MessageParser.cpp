@@ -20,7 +20,7 @@ void MessageParser::parse(const std::string  &input) {
 			int size;
 			double price;
 			std::getline(ss, token, ',');
-      id = str2i(token, "OrderId");
+      		id = str2i(token, "OrderId");
 			std::getline(ss, token, ',');
 			side = str2i(token, "OrderSide");
 			std::getline(ss, token, ',');
@@ -34,7 +34,7 @@ void MessageParser::parse(const std::string  &input) {
 			id = str2i(token, "OrderId");
 			book.cancel_order(id);
 		} else {
-			LOG(ERROR) << "Bad Input Code.";
+			LOG(ERROR) << "Bad Request: Invalid order type.";
 		}
 	} catch(...) {
 		LOG(ERROR) << "Bad Request";
