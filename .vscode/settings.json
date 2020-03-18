@@ -57,6 +57,6 @@
         "xtree": "cpp",
         "xutility": "cpp"
     },
-    "C_Cpp.errorSquiggles": "Disabled",
+    "C_Cpp.errorSquiggles": "Enabled",
     "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools"
 }
