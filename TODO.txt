@@ -1,8 +1,8 @@
 * DONE Fix order matcher algo
-* Remove non-necessary log messages
+* DONE: Remove non-necessary log messages
   Progress: Created Logger class. We can specify log level in main to remove debug messages.
   Need to make sure all debug/error messages are using this class;
-* Fix output of program according to expected output
+* DONE: Fix output of program according to expected output
 * DONE: Input validation
 * DONE: Create test cases
     testSet2.txt  =  order causing trade in multiple orders
