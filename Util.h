@@ -42,5 +42,4 @@ bool validate_input(int id, bool side=-1, int size=-1, double price=-1, bool isC
 	}
 	return true;
 }
-
 #endif
