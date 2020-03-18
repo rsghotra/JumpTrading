@@ -4,7 +4,6 @@
 #include<list>
 #include<unordered_map>
 #include<vector>
-
 #include "OrderBook.h"
 
 class OrderBookLL : public OrderBook {

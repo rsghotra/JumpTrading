@@ -8,6 +8,10 @@ bool match(bool side, double a, double b) {
 }
 
 void OrderBookLL::match_order(int id, bool side, double price, int size) {
+	if ( order_map.count(id) != 0 ) {
+		LOG(ERROR) << "Order with id " << id << " already exists, not processing.";
+		return;
+	}
 	LOG(DEBUG) << "OrderBookLL: match_order " << id << " " << (side?"buy":"sell") << " " << price << " " << size;
 	Book &cross = side? bid_book:ask_book;
 	auto it = cross.levels.begin();
@@ -40,7 +44,7 @@ void OrderBookLL::match_order(int id, bool side, double price, int size) {
 void OrderBookLL::cancel_order(int id) {
 	LOG(DEBUG) << "OrderBookLL: cancel_order " << id << "\n";
 	if ( order_map.count(id) == 0 ) {
-		LOG(WARNING) << "Order with id " << id << " does not exist.\n";
+		LOG(ERROR) << "Order with id " << id << " does not exist.";
 		return;
 	}
 	auto node = order_map[id];

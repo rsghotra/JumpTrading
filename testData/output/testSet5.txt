@@ -1,0 +1,12 @@
+ERROR:  Bad Request: Price must be greater than zero.
+ERROR:  Bad Request: Price must be greater than zero.
+2,3,1080
+4,100004,2
+3,100001
+ERROR:  Bad Request: Price must be greater than zero.
+ERROR:  Bad Request: Price must be greater than zero.
+ERROR:  Bad Request: Price must be greater than zero.
+ERROR:  Bad Request: Price must be greater than zero.
+ERROR:  Bad Request: Price must be greater than zero.
+ERROR:  Bad Request: Price must be greater than zero.
+ERROR:  Bad Request: Price must be greater than zero.

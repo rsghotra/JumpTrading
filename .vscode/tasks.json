@@ -19,7 +19,7 @@
         {
             "label": "run",
             "type": "shell",
-            "command": "${workspaceFolderBasename} < C:\\gitP\\${workspaceFolderBasename}\\testData\\input\\testSet8.txt",
+            "command": "${workspaceFolderBasename} < testData\\input\\testSet11.txt",
             "dependsOn": [
                 "build"
             ],
