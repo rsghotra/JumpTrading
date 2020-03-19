@@ -1,7 +1,9 @@
-* DONE Fix order matcher algo
+* DONE: Design Data structure
+* DONE: Input validation
+* DONE: Order matcher algo
 * DONE: Remove non-necessary log messages
   DONE: Created Logger class. We can specify log level in main to remove debug messages.
-  Need to make sure all debug/error messages are using this class;
+  DONE: Need to make sure all debug/error messages are using this class;
 * DONE: Fix output of program according to expected output
 * DONE: Input validation
 * DONE: Create test cases
@@ -15,8 +17,8 @@
     testSet9.txt  =  cancel_order with arbit id
     testSet10.txt =  cancel_order with completed order
     testSet11.txt =  out of range input
-DONE Create Expected Output test case
-* Test suite runner
-* Documentation
-* Cleanup (Good OOP + naming etc)
-* Comparison of performance (LL vs RBT)
+DONE: Create Expected Output test case
+DONE: Test suite runner
+DONE Documentation
+DONE: Cleanup (Good OOP + naming etc)
+DONE: Comparison of performance (LL vs RBT)
