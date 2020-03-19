@@ -13,32 +13,50 @@ add_executable(matching
 
 enable_testing()
 
-add_test(NAME test1
+add_test(NAME SimpleInput
 	COMMAND bash -c "diff <( ./matching < ../testData/input/testSet0.txt) ../testData/output/testSet0.txt"
 )
 
-# does the application run
-add_test(NAME Runs COMMAND Tutorial 25)
+add_test(NAME SimpleInputWithAnError
+	COMMAND bash -c "diff <( ./matching < ../testData/input/testSet1.txt) ../testData/output/testSet1.txt"
+)
 
-# does the usage message work?
-add_test(NAME Usage COMMAND Tutorial)
-set_tests_properties(Usage
-  PROPERTIES PASS_REGULAR_EXPRESSION "Usage:.*number"
-  )
+add_test(NAME TradeInMultipleOrdersSamePrice
+	COMMAND bash -c "diff <( ./matching < ../testData/input/testSet2.txt) ../testData/output/testSet2.txt"
+)
 
-# define a function to simplify adding tests
-function(do_test target arg result)
-  add_test(NAME Comp${arg} COMMAND ${target} ${arg})
-  set_tests_properties(Comp${arg}
-    PROPERTIES PASS_REGULAR_EXPRESSION ${result}
-    )
-endfunction(do_test)
+add_test(NAME TradeInMultipleOrdersMultiplePrice
+	COMMAND bash -c "diff <( ./matching < ../testData/input/testSet3.txt) ../testData/output/testSet3.txt"
+)
 
-# do a bunch of result based tests
-do_test(Tutorial 4 "4 is 2")
-do_test(Tutorial 9 "9 is 3")
-do_test(Tutorial 5 "5 is 2.236")
-do_test(Tutorial 7 "7 is 2.645")
-do_test(Tutorial 25 "25 is 5")
-do_test(Tutorial -25 "-25 is [-nan|nan|0]")
-do_test(Tutorial 0.0001 "0.0001 is 0.01")
+add_test(NAME GarbageInput
+	COMMAND bash -c "diff <( ./matching < ../testData/input/testSet4.txt) ../testData/output/testSet4.txt"
+)
+
+add_test(NAME InvalidPrice
+	COMMAND bash -c "diff <( ./matching < ../testData/input/testSet5.txt) ../testData/output/testSet5.txt"
+)
+
+add_test(NAME InvalidSize
+	COMMAND bash -c "diff <( ./matching < ../testData/input/testSet6.txt) ../testData/output/testSet6.txt"
+)
+
+add_test(NAME InvalidId
+	COMMAND bash -c "diff <( ./matching < ../testData/input/testSet7.txt) ../testData/output/testSet7.txt"
+)
+
+add_test(NAME InvalidAddOrderRequest
+	COMMAND bash -c "diff <( ./matching < ../testData/input/testSet8.txt) ../testData/output/testSet8.txt"
+)
+
+add_test(NAME InvalidCancelOrderRequest
+	COMMAND bash -c "diff <( ./matching < ../testData/input/testSet9.txt) ../testData/output/testSet9.txt"
+)
+
+add_test(NAME InvalidCancelRequestForFilledOrder
+	COMMAND bash -c "diff <( ./matching < ../testData/input/testSet10.txt) ../testData/output/testSet10.txt"
+)
+
+add_test(NAME OutOfRangeInput
+	COMMAND bash -c "diff <( ./matching < ../testData/input/testSet11.txt) ../testData/output/testSet11.txt"
+)

@@ -7,3 +7,7 @@
 CMakeCache.txt
 *.sln
 /Testing
+*.exe
+Makefile
+JumpTrading
+matching
