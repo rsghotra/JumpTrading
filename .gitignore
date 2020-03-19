@@ -6,3 +6,4 @@
 *.cmake
 CMakeCache.txt
 *.sln
+/Testing

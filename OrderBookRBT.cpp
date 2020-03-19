@@ -4,10 +4,6 @@ void OrderBookRBT::add_order(int id, bool side, double price, int size) {
 	std::cout << "OrderBookRBT: add_order " << id << " " << (side?"sell":"buy") << " " << price << " " << size << '\n';
 	if (side) {
 		int sizeRemaining = size;
-//		for( OrderInfo& bid: _bidBook ) {
-//			if(bid.price < ask.price || size == 0)
-//				break;
-//		}
 		auto it = _bidBook.begin();
 		while( it != _bidBook.end() && it->price >= price && size > 0 ) {
 			std::cout << "it: " << it->id << " " << it->price << " " << it->size <<"\n";
@@ -44,7 +40,6 @@ void OrderBookRBT::add_order(int id, bool side, double price, int size) {
 		}
 		_bidBook.insert({id, price, size, seq_num++});
 	}
-	//print_books();
 };
 
 void OrderBookRBT::cancel_order(int id) {
