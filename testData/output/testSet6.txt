@@ -1,9 +1,0 @@
-ERROR:  Bad Request: Order size must be greater than zero.
-2,3,1080
-4,100003,2
-3,100001
-2,2,1075
-3,100003
-3,100000
-ERROR:  Bad Request: Order size must be greater than zero.
-ERROR:  Order with id 100003 does not exist.

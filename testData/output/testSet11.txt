@@ -1,6 +1,0 @@
-ERROR:  Bad Input: Unexpected or out of range datatype detected.
-ERROR:  Bad Input: Unexpected or out of range datatype detected.
-ERROR:  Bad Input: Unexpected or out of range datatype detected.
-2,1,1075
-3,100010
-4,100000,1
