@@ -18,4 +18,5 @@ for f in *; do
         echo "Expected Test Data <= <= <= "
         cat ../expected/$f
         echo "RESULT: PASSED!!"
+	fi
 done
