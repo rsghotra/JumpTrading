@@ -11,7 +11,7 @@
 class MessageParser {
 public:
 	MessageParser(OrderBook& book) : book(book) {}
-    void parse(const std::string  &input);
+	void parse(const std::string &input);
 
 private:
 	OrderBook& book;

@@ -18,7 +18,7 @@ void OrderBookLL::match_order(int id, bool side, double price, int size) {
 	while( it!= cross.levels.end() && size > 0 && match(side, it->price, price) ) {
 		double tradePrice = it->price;
 		auto node = it->nodes.begin();
-		while( node != it->nodes.end() && size > 0) {
+		while( node != it->nodes.end() && size > 0 ) {
 			int tradeSize = std::min(size, node->size);
 			size -= tradeSize;
 			node->size -= tradeSize;

@@ -8,7 +8,7 @@
 #include "Util.h"
 #include "Logger.h"
 
-void MessageParser::parse(const std::string  &input) {
+void MessageParser::parse(const std::string &input) {
 	std::istringstream ss(input);
 	std::string token;
 	try {
@@ -20,7 +20,7 @@ void MessageParser::parse(const std::string  &input) {
 			int size;
 			double price;
 			std::getline(ss, token, ',');
-      		id = str2i(token);
+			id = str2i(token);
 			std::getline(ss, token, ',');
 			side = str2i(token);
 			std::getline(ss, token, ',');
@@ -32,7 +32,7 @@ void MessageParser::parse(const std::string  &input) {
 			int id;
 			std::getline(ss, token, ',');
 			id = str2i(token);
-			if(validate_input(id, 1, -1,-1,true)) book.cancel_order(id);			
+			if(validate_input(id, 1, -1, -1, true)) book.cancel_order(id);
 		} else {
 			LOG(ERROR) << "Bad Request: Invalid order type.";
 		}
