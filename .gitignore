@@ -12,3 +12,4 @@ build/CMakeFiles
 build/Win32/*
 build/JumpTrading.dir
 build/Debug
+.vscode
