@@ -8,8 +8,10 @@ Pre-requisite: g++ 9 or above and CMake 2.8 or above.
 3. Give the directory execution rights in case you see elavation issue. chmod 777 build
 4. Build using CMAKE. On command terminal type: CMake .
 5. On Windows: CMake by default will generate executable under /build/Debug
-6. On Windows: Project will build in ../JumpTrading/build directory and executable will be in /build/Debug directory with name JumpTrading.
-7. On MacOSX, Linux: CMake will generate a Make file in ../JumprTrading/build directory.
+6. On Windows: Project will build in ../JumpTrading/build directory.
+7. On Windows, while you are ../JumpTrading/build directory - you need to run:
+   The above command will create an executable in /build/Debug directory with name JumpTrading.exe.
+7. On MacOSX, Linux: CMake had generated a Make file in ../JumprTrading/build directory.
 8. On MacOSX, Linux: When Make file is created. While you are in /build directory. Run make file by typing: make
 9. On MacOSX, Linux: Executable will be generated in /build directory. With name JumpTrading
 
