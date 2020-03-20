@@ -14,6 +14,7 @@ public:
 	void set_execution_listener(ExecutionListener* listener) override {
 		this->listener = listener;
 	}
+	void match_order(int id, bool side, double price, int size) override {}
 
 private:
 	void print_books();
