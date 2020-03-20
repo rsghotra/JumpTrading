@@ -10,7 +10,7 @@ Order Matching Engine: Linked List based OrderBook implementation.
 
 #How to run smoke tests supplied in testData/input directory.
 1. Open shell on linux and cd to ../JumpTrading/testData
-2. Execute test-runner.sh
+2. Execute test-runner.sh. Type ./test-runner.sh
 3. Tests will run and a new directory name output will be created.
 4. Test runner matches each test's output data with pre-existing expected output data in /testData/expected directory.
 5. If both files matches - test is declared passed else test is failed.
