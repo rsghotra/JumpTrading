@@ -18,7 +18,7 @@ Pre-requisite: g++ 9 or above and CMake 2.8 or above.
 #How to run smoke tests supplied in testData/input directory.
 1. Open shell on linux and cd to ../JumpTrading/testData
 2. Execute test-runner.sh. Type ./test-runner.sh ; 
-NOTE: if you see exe not found error. Then please edit line 12 of test-runner.sh file to point the program to the directory where your  executable have been generated. Typically - ../JumpTrading/build directory.
+NOTE: if you see executable not found error. Then please edit line 12 of test-runner.sh file to point the program to the directory where your  executable have been generated. Typically - ../JumpTrading/build directory.
 3. Tests will run and a new directory name output will be created.
 4. Test runner matches each test's output data with pre-existing expected output data in /testData/expected directory.
 5. If both files matches - test is declared passed else test is failed.
