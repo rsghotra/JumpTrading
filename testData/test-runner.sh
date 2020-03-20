@@ -9,7 +9,7 @@ testCount=0;
 echo "Starting test-suite."
 for f in *; do
     echo "=======TestCase $f==========="
-    ../../build/Debug/JumpTrading < $f > ../output/$f
+    ../../build/JumpTrading < $f > ../output/$f
     diff ../output/$f ../expected/$f
     if [[ $? -eq 0 ]]; then
         echo "Test $f passed"
