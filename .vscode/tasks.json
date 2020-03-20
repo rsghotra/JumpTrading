@@ -19,7 +19,7 @@
         {
             "label": "run",
             "type": "shell",
-            "command": "./${workspaceFolderBasename} < testData/input/testSet1.txt",
+            "command": "${workspaceFolderBasename} < testData/input/SimpleInput.txt",
             "dependsOn": [
                 "build"
             ],
