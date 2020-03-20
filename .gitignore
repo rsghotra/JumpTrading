@@ -3,10 +3,12 @@
 *.vcxproj.filters
 *.sln
 /Testing
-JumpTrading
 testData/output/*
 build/CMakeCache.txt
 build/.*vcxproj
 build/*.sln
 build/*.cmake
 build/CMakeFiles
+build/Win32/*
+build/JumpTrading.dir
+build/Debug
