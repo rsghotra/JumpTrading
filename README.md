@@ -1,10 +1,15 @@
 # JumpTrading
-Order Matching Engine
+Order Matching Engine: Linked List based OrderBook implementation.
 
-Class Description:
+#How to Build
+1. cd to directory where project is cloned. cd ../JumpTrading
+2. Create a new directory name 'build'. mkdir build
+3. Build using CMAKK. On command terminal type: CMake ../build
+4. Project will build in ../JumpTrading/build directory.
 
-OrderReceiver: Receives order, analyze it and send to OrderMatcher class.
-OrderMatcher: Receives processed order data from OrderReceiver class. if order is of 'aggressive nature' OrderMatcher class delegates the data to AgressiveOrderMatcher class.
-AggressiveOrderMatcher: Pursue aggressive order matching strategies to fill the order asap.
-OrderExecuter: After getting go from Matcher class. OrderExecuter class pulls the trigger.
-CancelOrderRequest: Cancels the order.
+#How to run smoke tests supplied in testData/input directory.
+1. Open shell on linux and cd to ../JumpTrading/testData
+2. Execute test-runner.sh
+3. Tests will run and a new directory name output will be created.
+4. Test runner matches each test's output data with pre-existing expected output data in /testData/expected directory.
+5. If both files matches - test is declared passed else test is failed.
