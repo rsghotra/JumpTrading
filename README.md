@@ -2,6 +2,7 @@
 Order Matching Engine: Linked List based OrderBook implementation.
 
 #How to Build
+Pre-requisite: g++ 9 or above and CMake 2.8 or above.
 1. cd to directory where project is cloned. cd ../JumpTrading
 2. cd build
 3. Give the directory execution rights in case you see elavation issue. chmod 777 build
