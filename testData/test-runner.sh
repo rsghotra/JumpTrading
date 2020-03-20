@@ -18,10 +18,4 @@ for f in *; do
         echo "Expected Test Data <= <= <= "
         cat ../expected/$f
         echo "RESULT: PASSED!!"
-    else
-        echo "RESULT: FAILED. Need fix."
-    fi
-    ((testCount=testCount+1))
 done
-
-echo "All tests executed."
