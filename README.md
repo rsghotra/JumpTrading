@@ -13,7 +13,7 @@ Pre-requisite: g++ 9 or above and CMake 2.8 or above.
    The above command will create an executable in /build/Debug directory with name JumpTrading.exe.
 7. On MacOSX, Linux: CMake had generated a Make file in ../JumprTrading/build directory.
 8. On MacOSX, Linux: When Make file is created. While you are in /build directory. Run make file by typing: make
-9. On MacOSX, Linux: Executable will be generated in /build directory. With name JumpTrading
+9. On MacOSX, Linux: Executable will be generated in /build directory. With name JumpTrading.
 
 #How to run smoke tests supplied in testData/input directory.
 1. Open shell on linux and cd to ../JumpTrading/testData
