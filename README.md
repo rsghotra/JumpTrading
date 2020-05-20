@@ -1,5 +1,8 @@
 # JumpTrading
-Order Matching Engine: Linked List based OrderBook implementation.
+Order Matching Engine: Linked List and Set based OrderMatching implementation.
+Price-Time priority Engine.
+
+DESCRIPTION: Please read Order_Matcher_Description.pdf for detail of implementation.
 
 #How to Build
 Pre-requisite: g++ 9 or above and CMake 2.8 or above.
